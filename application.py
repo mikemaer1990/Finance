@@ -1,7 +1,6 @@
 import re
 import json
 import requests
-from os import environ
 
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
@@ -15,9 +14,8 @@ from helpers import apology, lookup, usd
 
 # Configure application
 app = Flask(__name__)
-app.config['SESSION_TYPE'] = 'redis'
-app.config['SECRET_KEY'] = 'super secret key'
-app.config['SESSION_REDIS'] = redis.from_url(environ.get('SESSION_REDIS'))
+app.secret_key = 'super secret key'
+app.config['SESSION_TYPE'] = 'filesystem'
 
 # Ensure templates are auto-reloaded
 # app.config["TEMPLATES_AUTO_RELOAD"] = True
