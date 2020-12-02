@@ -14,7 +14,7 @@ from helpers import apology, lookup, usd
 
 # Configure application
 app = Flask(__name__)
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = 'adsokfdsa9jagdsgadp'
 # Ensure templates are auto-reloaded
 # app.config["TEMPLATES_AUTO_RELOAD"] = True
 
