@@ -14,7 +14,9 @@ from helpers import apology, lookup, usd
 
 # Configure application
 app = Flask(__name__)
-app.secret_key = 'adsokfdsa9jagdsgadp'
+app.config['SESSION_TYPE'] = 'memcached'
+app.config['SECRET_KEY'] = 'super secret key'
+
 # Ensure templates are auto-reloaded
 # app.config["TEMPLATES_AUTO_RELOAD"] = True
 
