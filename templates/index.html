@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+<h1 id="porfolioH1">Your Portfolio</h1>
+<main class="container p-5">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td style="font-weight:bold">TOTAL</td>
+                <td colspan="3"></td>
+                <td>{{ totalFunds }}</td>
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for row in portfolioList %}
+                {% if row['shares'] > 0 %}
+                    <tr>
+                        <td>{{ row["stock"] }}</td>
+                        <td>{{ row["name"] }}</td>
+                        <td>{{ row["shares"] }}</td>
+                        <td>{{ row["price"] }}</td>
+                        <td>{{ row["total"] }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+            <tr>
+                <td style="font-weight:bold">CASH</td>
+                <td colspan="3"></td>
+                <td>{{ userFunds }}</td>
+            </tr>
+        </tbody>
+    </table>
+</main>
+
+{% endblock %}
+

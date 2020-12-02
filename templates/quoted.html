@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <p>A share of {{ stocks['name'] }} ({{ stocks['symbol'] }}) is worth <b>{{ price }}</b></p>
+    <a href class="btn btn-primary" href="/quote.html">Go back</a>
+{% endblock %}
