@@ -10,7 +10,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import apology, login_required, lookup, usd
+from helpers import apology, lookup, usd
 
 # Configure application
 app = Flask(__name__)
@@ -40,8 +40,9 @@ db = SQL("sqlite:///finance.db")
 
 
 @app.route("/")
-@login_required
 def index():
+    if session.get("user_id") is None:
+        return redirect("/login")
     """Show portfolio of stocks"""
     # Get portfolio from database
     portfolio = db.execute("SELECT stock, SUM(shares) FROM transactions WHERE UserID = :userid GROUP BY stock", userid = session["user_id"])
@@ -71,9 +72,10 @@ def index():
 
 
 @app.route("/buy", methods=["GET", "POST"])
-@login_required
 def buy():
     """Buy shares of stock"""
+    if session.get("user_id") is None:
+        return redirect("/login")
     # If form is submitted
     if request.method == "POST":
 
@@ -111,8 +113,9 @@ def buy():
 
 
 @app.route("/history")
-@login_required
 def history():
+    if session.get("user_id") is None:
+        return redirect("/login")
     """Show history of transactions"""
     history = db.execute("SELECT stock, shares, stockPrice, Timestamp FROM transactions WHERE UserID = :userid", userid = session["user_id"])
     # Declare a list for storing stock info
@@ -128,6 +131,7 @@ def history():
                 }
             )
     return render_template("history.html", historyList=historyList)
+
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -179,9 +183,10 @@ def logout():
 
 
 @app.route("/quote", methods=["GET", "POST"])
-# @login_required
 def quote():
     """Get stock quote."""
+    if session.get("user_id") is None:
+        return redirect("/login")
     if request.method == "POST":
         # If the user doesn't provide a stock
         if not request.form.get("stock"):
@@ -242,9 +247,10 @@ def register():
 
 
 @app.route("/sell", methods=["GET", "POST"])
-@login_required
 def sell():
     """Sell shares of stock"""
+    if session.get("user_id") is None:
+        return redirect("/login")
     if request.method == "POST":
 
         # Ensure the user provides an amount to sell
